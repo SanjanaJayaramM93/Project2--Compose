@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  # Docker-in-Docker (DinD) service configuration
+  dind:
+    image: docker:dind
+    privileged: true
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    volumes:
+      - docker-certs-ca:/certs/ca
+      - docker-certs-client:/certs/client
+      - jenkins-data:/var/jenkins_home
+    networks:
+      - jenkins
+    container_name: dind
+
+  # Jenkins service configuration
+  jenkins:
+    image: jenkins/jenkins:lts-jdk11
+    user: root
+    environment:
+      - DOCKER_HOST=tcp://dind:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+    volumes:
+      - docker-certs-client:/certs/client:ro
+      - jenkins-data:/var/jenkins_home
+      - /usr/bin/docker:/usr/bin/docker
+    ports:
+      - "8080:8080"  # Jenkins Web UI
+      - "50000:50000"  # Jenkins agent communication
+    networks:
+      - jenkins
+    container_name: jenkins
+
+networks:
+  jenkins:
+    driver: bridge
+
+volumes:
+  docker-certs-ca:
+  docker-certs-client:
+  jenkins-data:
+
