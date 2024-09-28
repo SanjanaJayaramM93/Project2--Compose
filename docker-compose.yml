@@ -11,6 +11,7 @@ services:
       - docker-certs-ca:/certs/ca
       - docker-certs-client:/certs/client
       - jenkins-data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock # Mount Docker socket for Jenkins access
     networks:
       - jenkins
     container_name: dind
@@ -26,7 +27,7 @@ services:
     volumes:
       - docker-certs-client:/certs/client:ro
       - jenkins-data:/var/jenkins_home
-      - /usr/bin/docker:/usr/bin/docker
+      - /var/run/docker.sock:/var/run/docker.sock  # Mount Docker socket
     ports:
       - "8080:8080"  # Jenkins Web UI
       - "50000:50000"  # Jenkins agent communication
