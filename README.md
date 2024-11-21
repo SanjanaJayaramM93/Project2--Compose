@@ -21,6 +21,14 @@ Navigate to the project directory:
 ```cd Project2-Compose```
 ## Getting Started
 After cloning the repository, you can proceed with setting up the Docker environment and configuring Jenkins for CI/CD automation. Follow the instructions in the respective task sections to complete the setup.
+Diagram Representation -Docker Compose File:
+![image](https://github.com/user-attachments/assets/0ad006a5-fee6-4077-b833-979608875848)
+
+Pipeline Execution
+
+![image](https://github.com/user-attachments/assets/623b0ece-9aa0-4ee8-a83f-397cbf023e71)
+
+
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for more details.
